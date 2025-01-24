@@ -1,0 +1,34 @@
+# Node.js関連
+node_modules/
+dist/
+build/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript関連
+*.tsbuildinfo
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# IDE関連
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS関連
+.DS_Store
+Thumbs.db
+
+# ロックファイル
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# テスト関連
+coverage/ 
