@@ -10,7 +10,7 @@ describe("no-external-imports", () => {
       ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
         valid: [
           {
-            code: "import './localModule';",
+            code: "import './module.private.ts';",
             filename: "src/example.private.ts",
           },
         ],
@@ -22,7 +22,7 @@ describe("no-external-imports", () => {
         valid: [],
         invalid: [
           {
-            code: "import '../externalModule';",
+            code: "import '../externalModule.private.ts';",
             filename: "src/example.private.ts",
             errors: [
               {
@@ -40,7 +40,7 @@ describe("no-external-imports", () => {
       ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
         valid: [
           {
-            code: "import 'src/module/internal.private.ts';",
+            code: "import 'src/module/module.private.ts';",
             filename: "src/module/example.private.ts",
           },
         ],
@@ -53,7 +53,7 @@ describe("no-external-imports", () => {
         valid: [],
         invalid: [
           {
-            code: "import 'src/absolute/path/to/module';",
+            code: "import 'src/absolute/path/to/module.private.ts';",
             filename: "src/example.private.ts",
             errors: [
               {

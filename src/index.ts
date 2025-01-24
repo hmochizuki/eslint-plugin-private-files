@@ -4,7 +4,7 @@ import path from 'path';
 const privateFileSuffix = 'private';
 
 const isMatchFileSuffix = (importPath: string, suffix: string) => {
-  const reg = new RegExp(`\\.(${suffix}|ts|js|tsx)$`);
+  const reg = new RegExp(`\\.(${suffix}|js|jsx|ts|tsx)$`);
   return reg.test(importPath);
 }
 
