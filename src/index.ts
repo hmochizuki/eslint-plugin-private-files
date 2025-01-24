@@ -1,7 +1,13 @@
 import { Rule } from 'eslint';
 import path from 'path';
 
-const privateFileExtension = '.private.ts';
+const privateFileSuffix = 'private';
+
+const isMatchFileSuffix = (importPath: string, suffix: string) => {
+  const reg = new RegExp(`\\.(${suffix}|ts|js|tsx)$`);
+  return reg.test(importPath);
+}
+
 export const errorMessage = 'Imports from outside the same directory are not allowed for *.private.ts files.';
 
 const rule: Rule.RuleModule = {
@@ -20,7 +26,7 @@ const rule: Rule.RuleModule = {
         const filePath = context.filename;
         const dir = path.dirname(filePath);
         const importPath = node.source.value as string;
-        if(!filePath.endsWith(privateFileExtension)) return;
+        if(!isMatchFileSuffix(importPath, privateFileSuffix)) return;
         if(importPath.startsWith("./") || path.dirname(importPath) === dir) return;
         context.report({
           node,
