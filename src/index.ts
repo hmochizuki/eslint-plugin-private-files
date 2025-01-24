@@ -11,7 +11,7 @@ const rule: Rule.RuleModule = {
     },
     schema: [] // no options
   },
-  create(context: Rule.RuleContext) {
+  create(context) {
     return {
       ImportDeclaration(node) {
         const filePath = context.filename;
@@ -21,11 +21,30 @@ const rule: Rule.RuleModule = {
           const dir = path.dirname(filePath);
           const resolvedPath = path.resolve(dir, importPath);
 
-          if (!resolvedPath.startsWith(dir)) {
-            context.report({
-              node,
-              message: 'Imports from outside the same directory are not allowed for *.private.ts files.'
-            });
+          console.log("--------------------------------");
+          console.log(resolvedPath, dir, importPath);
+          console.log("--------------------------------");
+
+          if (path.isAbsolute(importPath)) {
+            console.log("absolute");
+            // 絶対パスの場合、同一フォルダかどうかをチェック
+            if (!resolvedPath.startsWith(dir)) {
+              context.report({
+                node,
+                message: 'Absolute imports must be from the same directory for *.private.ts files.'
+              });
+            }
+          } else {
+            console.log("relative");
+            console.log(importPath.startsWith('./'));
+            // 相対パスの場合、./で始まることをチェック
+            if (!importPath.startsWith('./')) {
+              console.log("relative error");
+              context.report({
+                node,
+                message: 'Relative imports must start with "./" for *.private.ts files.'
+              });
+            }
           }
         }
       }
