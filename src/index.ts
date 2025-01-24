@@ -3,8 +3,8 @@ import path from 'path';
 
 const privateFileSuffix = 'private';
 
-const isMatchFileSuffix = (importPath: string, suffix: string) => {
-  const reg = new RegExp(`\\.(${suffix}|js|jsx|ts|tsx)$`);
+export const isPrivateFile = (importPath: string, suffix: string) => {
+  const reg = new RegExp(`\\.${suffix}(|.js|.jsx|.ts|.tsx)$`);
   return reg.test(importPath);
 }
 

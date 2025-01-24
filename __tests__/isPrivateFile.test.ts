@@ -19,9 +19,10 @@ describe("isPrivateFile", () => {
   it("should return false for invalid suffixes", () => {
     const invalidPaths = [
       "file",
-      "file.txt",
-      "file.md",
-      "file.json"
+      "file.js",
+      "file.jsx",
+      "file.ts",
+      "file.tsx",
     ];
 
     invalidPaths.forEach(path => {
