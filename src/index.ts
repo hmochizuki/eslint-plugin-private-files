@@ -21,10 +21,6 @@ const rule: Rule.RuleModule = {
           const dir = path.dirname(filePath);
           const resolvedPath = path.resolve(dir, importPath);
 
-          console.log("--------------------------------");
-          console.log(resolvedPath, dir, importPath);
-          console.log("--------------------------------");
-
           if (path.isAbsolute(importPath)) {
             console.log("absolute");
             // 絶対パスの場合、同一フォルダかどうかをチェック
