@@ -26,7 +26,7 @@ const rule: Rule.RuleModule = {
         const filePath = context.filename;
         const dir = path.dirname(filePath);
         const importPath = node.source.value as string;
-        if(!isMatchFileSuffix(importPath, privateFileSuffix)) return;
+        if(!isPrivateFile(importPath, privateFileSuffix)) return;
         if(importPath.startsWith("./") || path.dirname(importPath) === dir) return;
         context.report({
           node,
