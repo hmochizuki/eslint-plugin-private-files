@@ -5,64 +5,83 @@ import rule, { errorMessage } from "../src/index";
 const ruleTester = new RuleTester();
 
 describe("no-external-imports", () => {
-  describe("relative imports", () => {
-    it("should pass for valid imports", () => {
-      ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
-        valid: [
-          {
-            code: "import './module.private.ts';",
-            filename: "src/example.private.ts",
-          },
-        ],
-        invalid: [],
-      });
-    });
-    it("should fail for invalid relative imports", () => {
-      ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
-        valid: [],
-        invalid: [
-          {
-            code: "import '../externalModule.private.ts';",
-            filename: "src/example.private.ts",
-            errors: [
-              {
-                message: errorMessage,
-              },
-            ],
-          },
-        ],
-      });
+  it("when import is not private file, should not report error", () => {
+    ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
+      valid: [
+        {
+          code: "import 'src/module/external';",
+          filename: "src/module/example.ts",
+        },
+        {
+          code: "import './external';",
+          filename: "src/example",
+        },
+      ],
+      invalid: [],
     });
   });
 
-  describe("absolute imports", () => {
-    it("should pass for valid absolute imports", () => {
-      ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
-        valid: [
-          {
-            code: "import 'src/module/module.private.ts';",
-            filename: "src/module/example.private.ts",
-          },
-        ],
-        invalid: [],
+  describe("when import is private file", () => {
+    describe("relative imports", () => {
+      it("should pass for same directory imports", () => {
+        ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
+          valid: [
+            {
+              code: "import './module.private.ts';",
+              filename: "src/example.private.ts",
+            },
+          ],
+          invalid: [],
+        });
+      });
+      it("should fail for not same directory imports", () => {
+        ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
+          valid: [],
+          invalid: [
+            {
+              code: "import '../externalModule.private.ts';",
+              filename: "src/example.private.ts",
+              errors: [
+                {
+                  message: errorMessage,
+                },
+              ],
+            },
+          ],
+        });
+      });
+    });
+  
+    describe("absolute imports", () => {
+      it("should pass for same directory imports", () => {
+        ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
+          valid: [
+            {
+              code: "import 'src/module/module.private.ts';",
+              filename: "src/module/example.private.ts",
+            },
+          ],
+          invalid: [],
+        });
+      });
+  
+      it("should fail for not same directory imports", () => {
+        ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
+          valid: [],
+          invalid: [
+            {
+              code: "import 'src/absolute/path/to/module.private.ts';",
+              filename: "src/example.private.ts",
+              errors: [
+                {
+                  message: errorMessage,
+                },
+              ],
+            },
+          ],
+        });
       });
     });
 
-    it("should fail for invalid absolute imports", () => {
-      ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
-        valid: [],
-        invalid: [
-          {
-            code: "import 'src/absolute/path/to/module.private.ts';",
-            filename: "src/example.private.ts",
-            errors: [
-              {
-                message: errorMessage,
-              },
-            ],
-          },
-        ],
-      });
-    });
-  });
+  })
 });
