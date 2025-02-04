@@ -27,8 +27,8 @@ describe("no-external-imports", () => {
         ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
           valid: [
             {
-              code: "import './module.private.ts';",
-              filename: "src/example.private.ts",
+              code: "import './_module.ts';",
+              filename: "src/example.ts",
             },
           ],
           invalid: [],
@@ -39,8 +39,8 @@ describe("no-external-imports", () => {
           valid: [],
           invalid: [
             {
-              code: "import '../externalModule.private.ts';",
-              filename: "src/example.private.ts",
+              code: "import '../_externalModule.ts';",
+              filename: "src/example.ts",
               errors: [
                 {
                   message: errorMessage,
@@ -57,8 +57,8 @@ describe("no-external-imports", () => {
         ruleTester.run("no-external-imports", rule.rules["no-external-imports"], {
           valid: [
             {
-              code: "import 'src/module/module.private.ts';",
-              filename: "src/module/example.private.ts",
+              code: "import 'src/module/_module.ts';",
+              filename: "src/module/example.ts",
             },
           ],
           invalid: [],
@@ -70,8 +70,8 @@ describe("no-external-imports", () => {
           valid: [],
           invalid: [
             {
-              code: "import 'src/absolute/path/to/module.private.ts';",
-              filename: "src/example.private.ts",
+              code: "import 'src/absolute/path/to/_module.ts';",
+              filename: "src/example.ts",
               errors: [
                 {
                   message: errorMessage,
