@@ -1,13 +1,11 @@
 type Options = {
-  suffix: string;
-} | {
   prefix: string;
+  suffix: string;
 }
-export const isPrivateFile = (importPath: string, options: Options) => {
-  if('suffix' in options) {
-    const reg = new RegExp(`\\.${options.suffix}(|.js|.jsx|.ts|.tsx)$`);
-    return reg.test(importPath);
-  }
-  const reg = new RegExp(`^${options.prefix}.*`);
-  return reg.test(importPath.split("/").at(-1) ?? "");
-}
+
+export const isPrivateFile = (filePath: string, options: Options) => {
+  const prefix = options.prefix ? `^${options.prefix}.*|` : "";
+  const suffix = options.suffix ? `\\.${options.suffix}` : "";
+  const reg = new RegExp(`(${prefix}${suffix})(|.js|.jsx|.ts|.tsx)$`);
+  return reg.test(filePath);
+};
