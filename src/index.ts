@@ -1,23 +1,10 @@
 import { Rule } from 'eslint';
 import path from 'path';
+import { isPrivateFile } from './isPrivateFile';
 
 const SUFFIX = 'private';
 const PREFIX = '_';
 
-
-type Options = {
-  suffix: string;
-} | {
-  prefix: string;
-}
-export const isPrivateFile = (importPath: string, options: Options) => {
-  if('suffix' in options) {
-    const reg = new RegExp(`\\.${options.suffix}(|.js|.jsx|.ts|.tsx)$`);
-    return reg.test(importPath);
-  }
-  const reg = new RegExp(`^${options.prefix}.*`);
-  return reg.test(importPath.split("/").at(-1) ?? "");
-}
 
 export const errorMessage = 'Imports from outside the same directory are not allowed for _* files.';
 

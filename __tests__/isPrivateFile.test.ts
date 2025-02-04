@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isPrivateFile } from "../src/index";
+import { isPrivateFile } from "../src/isPrivateFile";
 
 describe("isPrivateFile", () => {
   describe("prefix", () => {

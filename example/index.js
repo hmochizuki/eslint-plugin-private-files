@@ -1,14 +1,7 @@
 import path from 'path';
+import { isPrivateFile } from '../dist/isPrivateFile';
 const SUFFIX = 'private';
 const PREFIX = '_';
-export const isPrivateFile = (importPath, options) => {
-    if ('suffix' in options) {
-        const reg = new RegExp(`\\.${options.suffix}(|.js|.jsx|.ts|.tsx)$`);
-        return reg.test(importPath);
-    }
-    const reg = new RegExp(`^${options.prefix}.*`);
-    return reg.test(importPath.split("/").at(-1) ?? "");
-};
 export const errorMessage = 'Imports from outside the same directory are not allowed for _* files.';
 const rule = {
     meta: {
