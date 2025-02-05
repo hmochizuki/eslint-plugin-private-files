@@ -82,6 +82,5 @@ describe("no-external-imports", () => {
         });
       });
     });
-
   })
 });

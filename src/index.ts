@@ -3,7 +3,7 @@ import path from 'path';
 import { isPrivateFile } from './isPrivateFile';
 
 
-export const errorMessage = 'Imports from outside the same directory are not allowed for _* files.';
+export const errorMessage = 'Imports from outside the same directory are not allowed for private files.';
 const schema = [
   {
     type: 'object',
@@ -22,7 +22,7 @@ const rule: Rule.RuleModule = {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Disallow imports from outside the same directory for _* files',
+      description: 'Disallow imports from outside the same directory for private files',
       category: 'Best Practices',
       recommended: true
     },
